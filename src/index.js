@@ -6,7 +6,7 @@ var mergeWith = require('lodash.mergewith');
 var isString = require('lodash.isstring');
 var isPlainObject = require('lodash.isplainobject');
 var srcset = require('srcset');
-var postcss = require('postcss');
+var parseCSS = require('postcss/lib/parse');
 var url = require('url');
 
 function each(obj, cb) {
@@ -317,7 +317,7 @@ function sanitizeHtml(html, options, _recursing) {
             }
             if (a === 'style') {
               try {
-                var abstractSyntaxTree = postcss.parse(name + " {" + value + "}");
+                var abstractSyntaxTree = parseCSS(name + " {" + value + "}");
                 var filteredAST = filterCss(abstractSyntaxTree, options.allowedStyles);
 
                 value = stringifyStyleAttributes(filteredAST);
